@@ -20,19 +20,19 @@ public class Bd {
     }
 
 
-//    public int getTrainersCount() {
-//        String SQL = "SELECT count(*) FROM coucher";
-//        int count = 0;
-//        try (Connection conn = connect();
-//             Statement stmt = conn.createStatement();
-//             ResultSet rs = stmt.executeQuery(SQL)) {
-//            rs.next();
-//            count = rs.getInt(1);
-//        } catch (SQLException ex) {
-//            System.out.println(ex.getMessage());
-//        }
-//        return count;
-//    }
+    public int getTrainersCount() {
+        String SQL = "SELECT count(*) FROM coucher";
+        int count = 0;
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(SQL)) {
+            rs.next();
+            count = rs.getInt(1);
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        return count;
+    }
 //
 //    public String getTrainersName() {
 //        String SQL = "SELECT coucher_id, full_name, phone_number from coucher";
@@ -91,7 +91,7 @@ public class Bd {
              ResultSet rs = stmt.executeQuery(SQL)) {
             while (rs.next()) {
 
-                System.out.println("Summa zp: "+rs.getInt("sum") + ": ");
+                System.out.println("Summa zp: " + rs.getInt("sum") + ": ");
             }
 
         } catch (SQLException ex) {
@@ -110,8 +110,8 @@ public class Bd {
              ResultSet rs = stmt.executeQuery(SQL)) {
             while (rs.next()) {
 
-                System.out.println("Info: "+rs.getString("full_name") + ": "+
-                rs.getString("wage"));
+                System.out.println("Info: " + rs.getString("full_name") + ": " +
+                        rs.getString("wage"));
             }
 
         } catch (SQLException ex) {
@@ -149,28 +149,122 @@ public class Bd {
 //
 //        }
 
-    public String TrainersInfo(){    //Эту функцию я списала. Она выводит только одно имя
-        String SQL = "select full_name from coucher";
-        String count = " ";
+//    public String Trainers() {    //Эту функцию я списала. Она выводит только одно имя
+//        String SQL = "select full_name from coucher";
+//        String count = " ";
+//        try (Connection conn = connect();
+//             Statement stmt = conn.createStatement();
+//             ResultSet rs = stmt.executeQuery(SQL)) {
+//            while (rs.next()) {
+//                count = (rs.getString("full_name"));
+//                if (count.contains(" ")) {
+//                    count = count.substring(0, count.indexOf(" "));
+//                    if (count.length() > 3) {
+//                        System.out.println(count + " Молодец!");
+//                    }
+//                }
+//            }
+//            count = rs.getString(1);
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//        return count;
+//    }
+//
+//
+//    public void printGroup(int searchId) {
+//        String SQL = "select * from groups where id = ?;";
+//
+//        try(Connection conn = connect();
+//            PreparedStatement stmt = conn.prepareStatement(SQL)
+//        ) {
+//            stmt.setInt(1, searchId);
+//            ResultSet rs = stmt.executeQuery();
+//            rs.next();
+//            System.out.println("ID: " + rs.getInt(1) + ", Name: " + rs.getString(2));
+//        }
+//        catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//        }
+//    }
+//
+//    public boolean insertHuman(Human human){
+//        String SQL = "Insert into humans (id,name) values ("+human.id+", '"+human.name+"')";
+//        try (Connection conn = connect();
+//             Statement stmt = conn.createStatement();
+//             ) {
+//            stmt.executeUpdate(SQL);
+//
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//            return false;
+//        }
+//        return true;
+//    }
+//    public boolean insertCountries(Countries countries){
+//        String SQL = "Insert into countries (id,name) values (?,?);";
+//        try (Connection conn = connect();
+//             PreparedStatement pstmt = conn.prepareStatement(SQL);
+//        ) {
+//            pstmt.setInt(1, countries.id);
+//            pstmt.setString(2, countries.name);
+//            pstmt.executeUpdate();
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//            return false;
+//        }
+//        return true;
+//    }
+//    public boolean insertCities(Cities cities){
+//        String SQL = "Insert into cities (id,name,countries,human) values (?,?,?,?);";
+//        try (Connection conn = connect();
+//            PreparedStatement pstmt = conn.prepareStatement(SQL);
+//        ) {
+//            pstmt.setInt(1, cities.id);
+//            pstmt.setString(2, cities.name);
+//            pstmt.executeUpdate();
+//        } catch (SQLException ex) {
+//            System.out.println(ex.getMessage());
+//            return false;
+//        }
+//
+//        return true;
+//    }
+
+    public boolean insertTown(Town town) {
+        String SQL = "Insert into Town (id,town_name) values (" + town.id + ", '" + town.name + "')";
         try (Connection conn = connect();
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(SQL)) {
-            while (rs.next()){
-                count=(rs.getString("full_name"));
-                if(count.contains(" ")){
-                    count= count.substring(0, count.indexOf(" "));
-                    if(count.length()>3){
-                        System.out.println(count+" Молодец!");
-                    }
-                }
-            }
-            count = rs.getString(1);
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(SQL);
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            return false;
         }
-        return count;
+        return true;
     }
+
+    public boolean sortingTownId(Town town) {
+        String SQL = "Update Town set id"+town.id+1+"Where id = 1";
+        //int id = 0;
+        try (Connection conn = connect();
+             Statement stmt = conn.createStatement()) {
+            stmt.executeUpdate(SQL);
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            return false;
+        }
+        return true;
+
+
+    }
+
+
 }
+
+
+
 
 
 
